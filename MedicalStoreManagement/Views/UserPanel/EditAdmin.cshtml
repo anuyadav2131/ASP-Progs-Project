@@ -1,0 +1,84 @@
+﻿@model MedicalStoreManagement.Models.LoginM
+@{
+    <div class="Tape"><h3>Medical Store Management</h3></div>
+}    @if (Session != null)
+{
+    <h6 style="text-align:right">@Session["username"]</h6>
+}
+else
+{
+    Response.Redirect("MainLogin");
+}
+<script type="text/javascript">
+    function preventBack() {
+        window.history.forward();
+    }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+        null;
+    }
+</script>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body style="background-color: #c0e2fe;">
+</body>
+@Html.Raw(ViewBag.Message)
+<h6 class="text-center success">@Html.Raw(TempData["Message"])</h6>
+<h4 class="text-center">Email-Id cannot be changed,Only Pasword can be...</h4>
+<style>
+    .Tape {
+        background-color: lightgreen;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+        font-size: large;
+    }
+
+    .MyButton {
+        text-align: center;
+    }
+
+    .form-horizontal {
+        text-align: center;
+        font-family: 'Lucida Handwriting';
+    }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.User_id, htmlAttributes: new { @Value = ViewBag.id })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RePassword, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.RePassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.RePassword, "", new { @class = "text-danger" })
+            </div>
+        </div><hr />
+        <div class="form-group">
+            <div class="col-md-12">
+                <input type="submit" value="Update" class="btn btn-primary button" />
+            </div>
+        </div>
+    </div>
+}
+<div class="MyButton"><input type="submit" onclick="location.href = '@Url.Action("Dashboard")'" value="Go to Dashboard" /></div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

@@ -1,0 +1,131 @@
+﻿@model MedicalStoreManagement.Models.Medicines
+@{
+    <div class="Tape"><h3>Medical Store Management</h3></div>
+}
+@{
+    ViewBag.Title = "AddMed";
+}
+@*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">*@
+@if (Session != null)
+{
+    <h4 style="text-align:right">@Session["username"]</h4>
+}
+else
+{
+    Response.Redirect("MainLogin");
+}
+<style>
+    .Tape {
+        background-color: lightgreen;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+        font-size: large;
+    }
+
+    .main-heading {
+        text-align: center;
+        font-family: 'Lucida Handwriting';
+        font-weight: 200;
+    }
+
+    .button {
+        text-align: center;
+        font-family: 'Lucida Handwriting';
+        font-weight: bold;
+        background-color: limegreen;
+    }
+
+    .form-horizontal {
+        font-family: 'Lucida Handwriting';
+        font-weight: 200;
+        color: black;
+    }
+</style>
+@Html.Raw(ViewBag.Message)
+<h6 class="text-center success">@Html.Raw(TempData["Message"])</h6>
+<br />
+<h2 class="main-heading main-heading">Add Medicines</h2>
+<body style="background-color: #c0e2fe ">
+</body>
+@using (Html.BeginForm("AddMed", "UserPanel", FormMethod.Post, new { enctype = "multipart/form-data" })) //ENCTYPT is used to Encrtypt the data in html forms-- it sets the form data to the server in multiple parts
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal ">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.M_Name, htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.M_Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.M_Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.M_Type, htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="dropdown">
+                <select id="M_Type" name="M_Type">
+                    <option value="Tube">Tube</option>
+                    <option value="Tab">Tablet</option>
+                    <option value="Syrup">Syrup</option>
+                    @Html.ValidationMessageFor(model => model.M_Type, "", new { @class = "text-danger" })
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Brand, htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Brand, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Brand, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Exp_Date, htmlAttributes: new { @class = "control-label col-md-5" })    @*md stands for Column medium*@
+            <div class="col-md-10">
+
+                @Html.EditorFor(model => model.Exp_Date, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                @*@Html.EditorFor(model => model.Exp_Date,
+                    additionalViewData: new { htmlAttributes = new { @readonly = "true", Model.Exp_Date.ToString(format:) } })*@
+
+
+
+                @Html.ValidationMessageFor(model => model.Exp_Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Information, htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Information, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Information, "", new { @class = "text-danger" })
+            </div>
+        </div><br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add" class="btn btn-default button" />    @*---Submit Button*@
+                <input type="reset" value="Clear" class="btn btn-default button" />    @*---Clear Button*@
+            </div>
+        </div>
+        <h4>@Html.ViewData["Message"]</h4>
+    </div>
+}
+<div class="MyButton"><input type="submit" class="btn" onclick="location.href = '@Url.Action("Dashboard")'" value="Go to Dashboard" /></div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

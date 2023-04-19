@@ -1,0 +1,138 @@
+﻿@model IEnumerable<MedicalStoreManagement.Models.Medicines>
+@{
+    <div class="Tape"><h3>Medical Store Management</h3></div>
+}
+@if (Session != null)
+{
+    <h6 style="text-align:right">@Session["username"]</h6>
+}
+else
+{
+    Response.Redirect("MainLogin");
+}
+<script type="text/javascript">
+    function preventBack() {
+        window.history.forward();
+    }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+        null;
+    }
+</script>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body style="background-color: mistyrose;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Profile
+                </a>
+                <div class="dropdown-menu" aria-labelledby="Profile">
+                    <a class="dropdown-item" href="MyProfile">My Profile</a>
+                    <a class="dropdown-item" href="Orders">Order History</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="Logout">Logout</a>
+                </div>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="UDashboard">Dashboard <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="ShowMedUser">Buy-Medicine <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="ShowCart">My-Cart <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        @*<form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>*@
+    </nav>
+</body>
+@Html.Raw(ViewBag.Message)
+<h6 class="text-center success">@Html.Raw(TempData["Message"])</h6>
+<style>
+    .Tape {
+        background-color: lightgreen;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .MyButton {
+        color: black;
+        border-radius: 5px;
+        padding: 3px;
+        text-align: center;
+        margin: 5px;
+    }
+
+    .ListMed {
+        text-align: center;
+    }
+</style>
+<body style="background-color: mistyrose; ">
+</body>
+<div class="ListMed"><h3>List of Medicines</h3></div>
+<table class="MyTable table-hover" style="border:2px solid black" align="center" cellpadding="10">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.M_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.M_Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Brand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Exp_Date)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.M_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.M_Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Exp_Date)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @using (Html.BeginForm("MyCart", "UserPanel", FormMethod.Post))
+                {
+                    <input type="hidden" id="M_Code" name="M_Code" value=@item.M_Code>
+                    <input type="hidden" id="User_id" name="User_id" value=@Session["user_id"]>
+                    <input type="submit" value="Add to cart" class="btn btn-success">
+                    @Html.ActionLink("Details", "MedDetailsUser", new { id = item.M_Code }, new { @class = "btn btn-primary button" })
+                }
+            </td>
+        </tr>
+    }
+    
+</table>

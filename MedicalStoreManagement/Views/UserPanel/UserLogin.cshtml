@@ -1,0 +1,87 @@
+﻿@model MedicalStoreManagement.Models.UserLogin
+@{
+    <div class="Tape"><h3>Medical Store Management</h3></div>
+}
+@{
+    ViewBag.Title = "User Login";
+}
+@if (Session != null)
+{
+    <h6>@Session["username"]</h6>
+}
+else
+{
+    Response.Redirect("MainLogin");
+}
+<style>
+    .Tape {
+        background-color: lightgreen;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+        font-size: large;
+    }
+
+    .main-heading {
+        text-align: center;
+        text-decoration: underline;
+        font-family: Lucida Handwriting;
+        font-weight: bold;
+    }
+
+    .background-color {
+        border-radius: 10px;
+        background-color: antiquewhite;
+    }
+
+    .button {
+        color: white;
+        border-radius: 2px;
+        background-color: limegreen;
+        padding: 6px;
+        text-align: center;
+        margin: 5px;
+    }
+
+    .main-heading {
+        background-color: mediumvioletred;
+        border-radius: 10px;
+    }
+
+    .form-horizontal {
+        text-align: center;
+    }
+</style>
+
+<h2 class="main-heading main-heading">User Login</h2>
+<div class="background-color">
+
+    @using (Html.BeginForm("UserLogin", "UserPanel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal ">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email_id, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Email_id, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email_id, "", new { @class = "text-danger" })
+            </div><br />
+
+            <div class="form-group  ">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div><h4>@Html.ViewData["Message"]</h4>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Login" class="btn btn-default button " />   @*---Login Button *@
+                    <!--<input type="reset" value="Clear" class="btn btn-default button" />-->    @*---Clear Button*@
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

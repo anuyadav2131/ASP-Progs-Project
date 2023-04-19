@@ -1,0 +1,129 @@
+﻿@model IEnumerable<MedicalStoreManagement.Models.Cart>
+@{ <div class="Tape"><h3>Medical Store Management</h3></div> }
+
+@if (Session != null)
+{
+    <h6 style="text-align:right">@Session["username"]</h6>
+}
+else
+{
+    Response.Redirect("MainLogin");
+}
+<script type="text/javascript">
+    function preventBack() {
+        window.history.forward();
+    }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+        null;
+    }
+</script>
+<style>
+    .Tape {
+        background-color: lightgreen;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+        font-size: large;
+    }
+
+    .field-validation-error {
+        color: #e80c20;
+        font-weight: bold;
+    }
+
+    .head {
+        text-align: center;
+    }
+</style>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body style="background-color: mistyrose;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Profile
+                </a>
+                <div class="dropdown-menu" aria-labelledby="Profile">
+                    <a class="dropdown-item" href="MyProfile">My Profile</a>
+                    <a class="dropdown-item" href="Orders">Order History</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="Logout">Logout</a>
+                </div>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="UDashboard">Dashboard <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="ShowMedUser">Buy-Medicine <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="ShowCart">My-Cart <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </nav>
+</body>
+@Html.Raw(ViewBag.Message)
+<h6 class="text-center success">@Html.Raw(TempData["Message"])</h6>
+<br />
+
+<div class="head"><h2>List of Medicines in your Cart</h2></div>
+<table class="MyTable table-hover" style="border:2px solid black" align="center" cellpadding="10">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.M_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Qty)
+        </th>
+        <th style="text-align:center">Actions</th>
+    </tr>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            @Html.HiddenFor(model => item.Cart_id)
+            @Html.HiddenFor(model => Session["user_id"])
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.M_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @*<div class="form-group">*@
+                        <input type="hidden" id="Cart_id" name="Cart_id" value=@item.Cart_id>
+                        <label for="quantity" class="a-native-dropdown">Quantity:</label>
+                        <select name="quantity" autocomplete="off" id="quantity" tabindex="0" data-action="a-dropdown-select" class="a-native-dropdown a-declarative">
+                            <option value="1" selected> 1 </option>
+                            <option value="2">2 </option>
+                            <option value="3">3 </option>
+                            <option value="4">4 </option>
+                            <option value="4">5 </option>
+                        </select>
+                    @*</div>*@
+                </td>
+                <td>
+                    @using (Html.BeginForm("ShowCart", "UserPanel", FormMethod.Post))
+                    {
+                        <input type="hidden" id="Cart_id" name="Cart_id" value=@ViewBag.id>
+                        <input type="hidden" id="M_Code" name="M_Code" value=@item.M_Code>
+                        <input type="hidden" id="User_id" name="User_id" value=@Session["user_id"]>
+                        <a>@Html.ActionLink("Click to Buy", "placeorder", new { Id = item.Cart_id }, new { @class = "btn btn-success button" })</a>
+                        <a>@Html.ActionLink("Details", "MedDetailsUser", new { id = item.M_Code }, new { @class = "btn btn-primary button" })</a>
+                        <a>@Html.ActionLink("Delete", "DeleteCartMed", new { id = item.Cart_id }, new { @class = "btn btn-danger button" })</a>
+                    }
+                </td>
+            </tr>
+        }
+    }
+</table>

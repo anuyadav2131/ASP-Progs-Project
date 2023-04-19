@@ -1,0 +1,32 @@
+﻿@model MedicalStoreManagement.Models.Cart
+<h6 class="text-center success">@Html.Raw(TempData["Message"])</h6>
+@using (Html.BeginForm("PlaceOrder", "UserPanel", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Cart</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <input type="hidden" name="Cart_id" id="Cart_id" value="@ViewBag.id" />
+            <label for="quantity" class="a-native-dropdown">Quantity:</label>
+            <select name="Qty" autocomplete="off" id="quantity" tabindex="0" data-action="a-dropdown-select" class="a-native-dropdown a-declarative">
+                <option value="1" selected> 1 </option>
+                <option value="2">2 </option>
+                <option value="3">3 </option>
+                <option value="4">4 </option>
+                <option value="5">5 </option>
+            </select>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+<div class="MyButton btn btn-success"><input type="submit" class="btn" onclick="location.href = '@Url.Action("UDashboard")'" value="Go to Dashboard" /></div>

@@ -1,0 +1,85 @@
+﻿@model MedicalStoreManagement.Models.Medicines
+@{
+    <div class="Tape"><h3>Medical Store Management</h3></div>
+}
+<div my-lg-0>
+    @if (Session != null)
+    {
+        <h6 style="text-align:right">@Session["username"]</h6>
+    }
+    else
+    {
+        Response.Redirect("MainLogin");
+    }
+</div>
+<script type="text/javascript">
+    function preventBack() {
+        window.history.forward();
+    }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+        null;
+    }
+</script>
+
+<style>
+    .Tape {
+        background-color: lightgreen;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+    }
+</style>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body style="background-color: #c0e2fe; ">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="Dashboard">Dashboard <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="ShowMed">Medicines <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="ShowBrands">Brands <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="AllOrders">Orders <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="AdProfile">Change-Password <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="form-inline my-5 my-lg-0"> @Html.ActionLink("Logout", "Logout", "UserPanel") </li>
+        </ul>
+        @*<form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search Medicine" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>*@
+    </nav>
+</body>
+@Html.Raw(ViewBag.Message)
+<h6 class="text-center success">@Html.Raw(TempData["Message"])</h6>
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active text-center" data-interval="1500">
+            <img src="https://t4.ftcdn.net/jpg/03/35/87/01/360_F_335870116_0ODNCQ3eRXwiIXCEFDQ6mKrKWCid8uay.jpg" alt="First slide">
+        </div>
+        <div class="carousel-item text-center" data-interval="2500">
+            <img src="https://www.lovethispic.com/uploaded_images/76589-Important-Health-Tips.jpg" alt="Third slide">
+        </div>
+        <div class="carousel-item text-center" data-interval="2500">
+            <img src="https://i.pinimg.com/originals/75/3f/8f/753f8ffd4aae2e766d66cc149d2918f5.jpg" alt="Fourth slide">
+        </div>
+        <div class="carousel-item text-center" data-interval="2500">
+            <img src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/health-tips-design-template-d769c06950915e7427d33680246a3623_screen.jpg?ts=1647360983" alt="slide-4">
+        </div>
+    </div>
+</div>

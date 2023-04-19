@@ -1,0 +1,134 @@
+﻿@model MedicalStoreManagement.Models.UserLogin
+@{
+    <div class="Tape"><h3>Medical Store Management</h3></div>
+}
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+</head>
+@if (Session != null)
+{
+    <h6 style="text-align:right">@Session["username"]</h6>
+}
+else
+{
+    Response.Redirect("MainLogin");
+}
+<script type="text/javascript">
+    function preventBack() {
+        window.history.forward();
+    }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+        null;
+    }
+</script>
+
+
+<style>
+    .Content {
+        text-align: center;
+    }
+
+    .head {
+        text-align: center;
+    }
+
+    .Tape {
+        text-align: center;
+        background-color: lightgreen;
+        color: black;
+        font-weight: bold;
+    }
+
+    .MyTable {
+        text-align: center;
+    }
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <ul class="navbar-nav mr-auto disable">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
+            <div class="dropdown-menu" aria-labelledby="Profile">
+                <a class="dropdown-item" href="MyProfile">My Profile</a>
+                <a class="dropdown-item" href="Orders">Order History</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="Logout">Logout</a>
+            </div>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="UDashboard">Dashboard <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="ShowMedUser">Buy-Medicine <span class="sr-only">(deactive)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="ShowCart">My-Cart <span class="sr-only">(current)</span></a>
+        </li>
+
+    </ul>
+</nav>
+
+@Html.Raw(ViewBag.Message)
+<h6 class="text-center success">@Html.Raw(TempData["Message"])</h6>
+<body style="background-color: mistyrose; ">
+    <h2 style="text-align:center"> Profile Updation</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+<div class="form-horizontal" style="border:2px solid black">
+    <hr /><input type="hidden" id="User_id" name="User_id" value=@ViewBag.id>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-12">
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-12">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-12">
+            @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Phone_no, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-12">
+            @Html.EditorFor(model => model.Phone_no, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Phone_no, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Adderess, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-12">
+            @Html.EditorFor(model => model.Adderess, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Adderess, "", new { @class = "text-danger" })
+
+            @Html.HiddenFor(model => model.User_id, htmlAttributes: new { @Value = ViewBag.id })
+        </div>
+    </div>
+    <div class="form-group" style="text-align:center">
+        <div class="col-md-offset-2 col-md-12">
+            <input type="submit" value="Update" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+    }
+</body>
+<div class="MyButton btn btn-primary"><input type="submit" class="btn" onclick="location.href = '@Url.Action("UDashboard")'" value="Go to Dashboard" /></div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

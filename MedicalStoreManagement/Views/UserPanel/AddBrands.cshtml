@@ -1,0 +1,96 @@
+﻿@model MedicalStoreManagement.Models.Brands
+@{
+    <div class="Tape"><h3>Medical Store Management</h3></div>
+}
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link" href="Dashboard">Dashboard <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="ShowMed">Medicines <span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item active">
+            <a class="nav-link" href="ShowBrands">Brands <span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item active">
+            <a class="nav-link" href="AdProfile">Change-Password <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="form-inline my-5 my-lg-0"> @Html.ActionLink("Logout", "Logout", "UserPanel") </li>
+    </ul>
+    @*<form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search Medicine" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>*@
+</nav>
+@Html.Raw(ViewBag.Message)
+<h5 class="text-center success">@Html.Raw(TempData["Message"])</h5>
+@if (Session != null)
+{
+    <h5 style="text-align:right">@Session["username"]</h5>
+}
+else
+{
+    Response.Redirect("MainLogin");
+}
+<style>
+    .Tape {
+        background-color: lightgreen;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+        font-size: large;
+    }
+
+    .main-heading {
+        text-align: center;
+        font-family: 'Lucida Handwriting';
+        font-weight: 200;
+    }
+
+    .MyButton {
+        text-align: center;
+        font-family: 'Lucida Handwriting';
+        font-weight: bold;
+        color: white;
+    }
+
+    .form-horizontal {
+        text-align: center;
+    }
+</style>
+<br />
+<h2 class="main-heading main-heading">Add Brand</h2>
+<body style="background-color: #c0e2fe ">
+</body>
+@using (Html.BeginForm("AddBrands", "UserPanel", FormMethod.Post, new { enctype = "multipart/form-data" })) //ENCTYPT is used to Encrtypt the data in html forms-- it sets the form data to the server in multiple parts
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal col-md-4">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.LabelFor(model => model.B_name, htmlAttributes: new { @class = "control-label col-md-5" })
+        @Html.EditorFor(model => model.B_name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.B_name, "", new { @class = "text-danger" })
+        <h4>@Html.ViewData["Message"]</h4>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12">
+                <input type="submit" value="Add" class="btn btn-default button" />    @*---Submit Button*@
+                <input type="reset" value="Clear" class="btn btn-default button" />    @*---Clear Button*@
+            </div>
+        </div>
+    </div>
+}
+<hr>
+<div class="MyButton"><input type="submit" class="btn" onclick="location.href = '@Url.Action("Dashboard")'" value="Go to Dashboard" /></div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

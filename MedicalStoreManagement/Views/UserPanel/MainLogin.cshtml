@@ -1,0 +1,54 @@
+﻿@{
+    <div class="Tape"><h3>Medical Store Management</h3></div>
+}
+<style>
+    .Tape {
+        background-color: lightgreen;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+        font-size: large;
+    }
+
+    .main-heading {
+        text-align: center;
+        text-decoration: underline;
+        font-family: Lucida Handwriting;
+        font-weight: bold;
+    }
+
+    .buttonSection {
+        border-radius: 10px;
+        background-color: antiquewhite;
+    }
+
+    .btn {
+        color: white;
+        border-radius: 2px;
+        background-color: limegreen;
+        padding: 6px;
+        text-align: center;
+        margin: 5px;
+    }
+    .main-heading{
+        background-color: mediumvioletred;
+        border-radius: 10px;    
+    }
+
+    .MyButton {
+        text-align: center;
+    }
+</style>
+<h2 class="main-heading main-heading">Main login page</h2>
+<div class="buttonSection">
+    @Html.AntiForgeryToken()
+    <div class="MyButton">
+        <br />
+        <input type="submit" class="btn" onclick="location.href = '@Url.Action("Login")'" value="Admin Login" /><br />
+        <input type="submit" class="btn" onclick="location.href = '@Url.Action("UserLogin")'" value="User Login" /><br /><br /><br />
+        Don' have Account??<br />
+        <input type="submit" class="btn" onclick="location.href = '@Url.Action("Registration")'" value="Click here to Register" /><br />
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>

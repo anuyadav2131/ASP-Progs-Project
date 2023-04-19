@@ -1,0 +1,123 @@
+﻿@model IEnumerable<MedicalStoreManagement.Models.Brands>
+@{
+    <div class="Tape"><h3>Medical Store Management</h3></div>
+}
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+
+@if (Session != null)
+{
+    <h6 style="text-align:right">@Session["username"]</h6>
+}
+else
+{
+    Response.Redirect("MainLogin");
+}
+<script type="text/javascript">
+    function preventBack() {
+        window.history.forward();
+    }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+        null;
+    }
+</script>
+
+@*@if (TempData["Meassage"] != null)
+    {
+        <div class="alert alert-danger">
+            <strong>Information !</strong> @TempData["Message"]
+            <button type="button" class="close" data-dismiss="alert" area-label="close">
+                <span>&times;</span>
+            </button>
+        </div>
+    }*@
+<style>
+    .Tape {
+        background-color: lightgreen;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .MyButton {
+        color: black;
+        border-radius: 5px;
+        padding: 3px;
+        text-align: center;
+        margin: 5px;
+    }
+</style>
+<body style="background-color: #c0e2fe; ">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="Dashboard">Dashboard <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="ShowMed">Medicines <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="ShowBrands">Brands <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="AllOrders">Orders <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="AdProfile">Change-Password <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="form-inline my-5 my-lg-0"> @Html.ActionLink("Logout", "Logout", "UserPanel") </li>
+        </ul>
+        @*<form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search Medicine" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>*@
+    </nav>
+</body>
+
+@Html.Raw(ViewBag.Message)
+<h6 class="text-center success">@Html.Raw(TempData["Message"])</h6>
+
+<h2 style="text-align:center">List of Brands</h2>
+<table class="MyTable table-hover" style="border:2px solid black" align="center" cellpadding="10">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.B_name)
+        </th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        @Html.HiddenFor(model => item.B_id)
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.B_name)
+            </td>
+            <td>
+
+                @*@Html.ActionLink("Edit", "EditBrand", new { id = item.B_id }, new { @class = "btn btn-primary button" })*@
+                @Html.ActionLink("Delete", "DeleteBrand", new { id = item.B_id }, new { @class = "btn btn-danger button" })
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<div class="MyButton">
+    <input type="submit" class="MyButton" onclick="location.href = '@Url.Action("AddBrands")'" value="Add Brand" /><hr />
+</div>
+
+
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</head>
+<body style="background-color: #c0e2fe; ">
+</body>

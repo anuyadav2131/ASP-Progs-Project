@@ -1,0 +1,136 @@
+﻿@model IEnumerable<MedicalStoreManagement.Models.Medicines>
+@{
+    <div class="Tape"><h3>Medical Store Management</h3></div>
+}
+@if (Session != null)
+{
+    <h6 style="text-align:right">@Session["username"]</h6>
+}
+else
+{
+    Response.Redirect("MainLogin");
+}
+<script type="text/javascript">
+    function preventBack() {
+        window.history.forward();
+    }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+        null;
+    }
+</script>
+<style>
+    .Tape {
+        background-color: lightgreen;
+        color: black;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .MyButton {
+        color: black;
+        border-radius: 5px;
+        padding: 3px;
+        text-align: center;
+        margin: 5px;
+    }
+
+    .ListMed {
+        text-align: center;
+    }
+</style>
+<body style="background-color: #c0e2fe; ">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="Dashboard">Dashboard <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="ShowMed">Medicines <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="ShowBrands">Brands <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="AllOrders">Orders <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="AdProfile">Change-Password <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="form-inline my-5 my-lg-0"> @Html.ActionLink("Logout", "Logout", "UserPanel") </li>
+        </ul>
+        @*<form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search Medicine" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>*@
+    </nav>
+</body>
+@Html.Raw(ViewBag.Message)
+<h5 class="text-center success">@Html.Raw(TempData["Message"])</h5>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<div class="ListMed"><h2>List of Medicines</h2></div>
+<table class="MyTable table-hover" style="border:2px solid black" align="center" cellpadding="10">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.M_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.M_Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Brand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Exp_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.M_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.M_Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Exp_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <input type="hidden" name="M_code" id="M_Code" value="@ViewBag.id" />
+                @Html.ActionLink("Edit", "EditMed", new { id = item.M_Code }, new { @class = "btn btn-primary button" })
+                @Html.ActionLink("Details", "MedDetails", new { id = item.M_Code }, new { @class = "btn btn-success button" })
+                @Html.ActionLink("Delete", "DeleteMed", new { id = item.M_Code }, new { @class = "btn btn-danger button" })
+            </td>
+        </tr>
+    }
+</table>
+<br />
+<div class="MyButton">
+    <input type="submit" class="btn btn-primary button" onclick="location.href = '@Url.Action("AddMed")'" value="Add New Medicine" /><hr />
+</div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
